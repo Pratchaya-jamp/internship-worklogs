@@ -247,7 +247,7 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 flex flex-col justify-between h-36 group hover:-translate-y-1 transition-transform duration-300">
+        <div class="bg-white p-6 rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 flex flex-col justify-between h-36 group hover:-translate-y-1 transition-transform duration-300 hover:cursor-pointer" @click="goToWeeklyProg">
           <div class="flex justify-between items-start">
             <div class="p-3 bg-sky-50 text-sky-600 rounded-2xl text-xl">📊</div>
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">This Week</span>
@@ -263,7 +263,7 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 flex flex-col justify-between h-36 group hover:-translate-y-1 transition-transform duration-300">
+        <div class="bg-white p-6 rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 flex flex-col justify-between h-36 group hover:-translate-y-1 transition-transform duration-300 hover:cursor-pointer" @click="goToMissing">
           <div class="flex justify-between items-start">
             <div class="p-3 bg-rose-50 text-rose-600 rounded-2xl text-xl">⚠️</div>
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Insufficient</span>
