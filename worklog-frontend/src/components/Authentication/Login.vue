@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import { fetchUtils } from '@/utils/fetchUtils';
 import ToastNotification from '@/components/ToastNotification.vue';
 
+import logoImg from '@/assets/logo.png'
+
 const router = useRouter();
 const toastRef = ref(null);
 const isLoading = ref(false);
@@ -61,9 +63,11 @@ const handleLogin = async () => {
     <div class="w-full max-w-sm bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/50 z-10 animate-fade-in-up">
       
       <div class="text-center mb-10">
-        <div class="w-12 h-12 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
-          W
-        </div>
+        <img 
+          :src="logoImg" 
+          alt="Logo" 
+          class="w-16 h-16 rounded-2xl mx-auto mb-4 shadow-lg shadow-indigo-500/20 object-cover"
+        />
         <h1 class="text-2xl font-bold text-slate-800">Welcome Back</h1>
         <p class="text-slate-400 text-sm mt-1">Enter your credentials to access Worklogs</p>
       </div>

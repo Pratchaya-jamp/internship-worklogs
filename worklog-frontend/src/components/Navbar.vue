@@ -3,6 +3,8 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { fetchUtils } from '@/utils/fetchUtils';
 
+import logoImg from '@/assets/logo.png'
+
 const props = defineProps({
   user: {
     type: Object,
@@ -37,10 +39,12 @@ const handleLogout = async () => {
 <template>
   <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/80 border-b border-slate-200/60 px-6 py-4 flex justify-between items-center transition-all duration-300">
     <div class="flex items-center gap-3 cursor-pointer" @click="router.push('/')">
-      <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform">
-        W
-      </div>
-      <span class="font-bold text-xl tracking-tight text-slate-800 hidden sm:block">Worklogs</span>
+      <img 
+        :src="logoImg" 
+        alt="Worklogs Logo" 
+        class="w-10 h-10 rounded-xl shadow-lg shadow-indigo-500/20 object-cover group-hover:scale-105 transition-transform duration-300"
+      />
+      <span class="font-bold text-xl tracking-tight text-slate-800 hidden sm:block">Internship Worklogs</span>
     </div>
 
     <div class="flex items-center gap-4" v-if="user">
