@@ -5,7 +5,7 @@ const { RegisterDTO, LoginDTO } = require("../dtos/authDto");
 // Config Cookie Options
 const cookieOptions = {
     httpOnly: true,
-    secure: false, // set true ถ้าใช้ https (Production)
+    secure: true, // set true ถ้าใช้ https (Production)
     sameSite: 'strict'
 };
 
