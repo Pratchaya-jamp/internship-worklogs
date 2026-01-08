@@ -1,23 +1,46 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '@/components/Authentication/Login.vue'
+import Register from '@/components/Authentication/Register.vue'
+import HomePage from '@/components/MainPage/HomePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'HomePage',
+      component: HomePage,
+      meta: { requiresAuth: true }
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta: { guestOnly: true }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
+      meta: { guestOnly: true }
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  // ตรวจสอบสถานะคร่าวๆ จาก localStorage (ตั้งค่าตอน Login success)
+  const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    // ถ้าจะเข้าหน้า Home แต่ยังไม่ Login -> ดีดไป Login
+    next({ name: 'Login' });
+  } else if (to.meta.guestOnly && isAuthenticated) {
+    // ถ้า Login แล้ว แต่อยากเข้า Login/Register -> ดีดกลับไป Home
+    next({ name: 'HomePage' });
+  } else {
+    // กรณีปกติ
+    next();
+  }
 })
 
 export default router

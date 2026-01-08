@@ -10,7 +10,12 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // ❌ ห้ามใช้ '*' ต้องระบุ URL ของ Vue
+  credentials: true,               // ✅ สำคัญมาก!
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);

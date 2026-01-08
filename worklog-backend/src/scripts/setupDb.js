@@ -30,10 +30,12 @@ const setupDatabase = async () => {
       CREATE TABLE IF NOT EXISTS worklogs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
-        title TEXT NOT NULL,
-        description TEXT,
-        date DATETIME NOT NULL, 
-        duration INTEGER DEFAULT 0, -- หน่วยเป็นนาที
+        week_no INTEGER NOT NULL,
+        date TEXT NOT NULL,       -- format YYYY-MM-DD
+        start_time TEXT NOT NULL, -- format HH:mm
+        end_time TEXT NOT NULL,   -- format HH:mm
+        content TEXT NOT NULL,
+        image_path TEXT,          -- เก็บชื่อไฟล์รูป (nullable)
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
       )
