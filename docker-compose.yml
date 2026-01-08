@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./worklog-frontend/dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+    networks:
+      - worklog-net
+
+  backend:
+    build:
+      context: ./worklog-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./worklog-backend/.env
+    networks:
+      - worklog-net
+    volumes:
+      - ./uploads:/app/uploads
+
+networks:
+  worklog-net:
+    driver: bridge
