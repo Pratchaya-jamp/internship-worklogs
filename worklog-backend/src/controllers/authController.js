@@ -6,7 +6,7 @@ const { RegisterDTO, LoginDTO } = require("../dtos/authDto");
 const cookieOptions = {
     httpOnly: true,
     secure: true, // set true ถ้าใช้ https (Production)
-    sameSite: 'none'
+    sameSite: 'strict'
 };
 
 class AuthController {
