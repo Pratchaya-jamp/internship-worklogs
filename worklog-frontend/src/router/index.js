@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/components/Authentication/Login.vue'
 import Register from '@/components/Authentication/Register.vue'
 import HomePage from '@/components/MainPage/HomePage.vue'
+import WeekProgress from '@/components/MainPage/WeekProgress.vue'
+import Insufficient from '@/components/MainPage/Insufficient.vue'
+import AddLog from '@/components/LogManagement/AddLog.vue'
+import EditLog from '@/components/LogManagement/EditLog.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +27,30 @@ const router = createRouter({
       name: 'Register',
       component: Register,
       meta: { guestOnly: true }
+    },
+    {
+      path: '/this-week',
+      name: 'WeekProgress',
+      component: WeekProgress,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/insufficient',
+      name: 'Insufficient',
+      component: Insufficient,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/newLog',
+      name: 'AddLog',
+      component: AddLog,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/log/:id/edit',
+      name: 'EditLog',
+      component: EditLog,
+      meta: { requiresAuth: true }
     },
   ],
 })

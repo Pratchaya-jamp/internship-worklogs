@@ -1,14 +1,21 @@
 // scripts/setupDb.js
-const db = require("../src/config/database");
+const db = require("./src/config/database");
 
 const setupDatabase = async () => {
   console.log("🔄 Starting Database Reset...");
 
   try {
-    // 1. DROP Tables (ต้องเรียงลำดับ Foreign Key: ลบลูกก่อนลบแม่)
-    console.log("   - Dropping existing tables...");
-    await db.execute("DROP TABLE IF EXISTS worklogs"); // ลบตารางงานก่อน
-    await db.execute("DROP TABLE IF EXISTS users");    // ลบตารางคน
+    // เพิ่มบรรทัดนี้: ปิดการเช็ค Foreign Key ชั่วคราวเพื่อให้ลบได้แน่นอน
+    await db.execute("PRAGMA foreign_keys = OFF"); 
+
+    console.log("   - Dropping 'worklogs' table...");
+    await db.execute("DROP TABLE IF EXISTS worklogs");
+
+    console.log("   - Dropping 'users' table...");
+    await db.execute("DROP TABLE IF EXISTS users");
+    
+    // เปิดคืน
+    await db.execute("PRAGMA foreign_keys = ON");
 
     // 2. CREATE Users Table
     console.log("   - Creating 'users' table...");
@@ -31,17 +38,17 @@ const setupDatabase = async () => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         week_no INTEGER NOT NULL,
-        date TEXT NOT NULL,       -- format YYYY-MM-DD
-        start_time TEXT NOT NULL, -- format HH:mm
-        end_time TEXT NOT NULL,   -- format HH:mm
+        date TEXT NOT NULL,
+        start_time TEXT NOT NULL, -- เก็บเวลา หรือคำว่า 'Absent'
+        end_time TEXT,            -- <--- ลบ NOT NULL ออก (ให้เป็น NULL ได้)
         content TEXT NOT NULL,
-        image_path TEXT,          -- เก็บชื่อไฟล์รูป (nullable)
+        image_path TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
       )
     `);
 
-    console.log("✅ Database Setup Completed! Ready to reuse.");
+    console.log("✅ Database Setup Completed! Schema is up to date.");
     
   } catch (error) {
     console.error("❌ Error setting up database:", error);
