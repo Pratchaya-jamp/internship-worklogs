@@ -374,9 +374,9 @@ onUnmounted(() => {
                  
                  <div class="flex items-center flex-wrap gap-4 pt-2 mt-auto">
                     
-                    <span class="inline-flex items-center gap-1 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
+                    <!-- <span class="inline-flex items-center gap-1 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
                        🆔 #{{ log.id }}
-                    </span>
+                    </span> -->
 
                     <div class="flex items-center gap-2">
                       <button 
