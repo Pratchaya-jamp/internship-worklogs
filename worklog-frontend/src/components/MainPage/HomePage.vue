@@ -79,18 +79,30 @@ const insufficientWeeksCount = computed(() => {
   const weeks = {};
   logs.value.forEach(log => {
     const date = new Date(log.date);
-    const key = `${date.getFullYear()}-W${log.week_no}`;
+    
+    // ✅ แก้ไข 1: แปลง week_no เป็น Int เสมอ กันกรณี "01" กับ "1"
+    const weekNum = parseInt(log.week_no, 10); 
+    const key = `${date.getFullYear()}-W${weekNum}`;
+    
     if (!weeks[key]) weeks[key] = { days: new Set(), hasEarlyLeave: false };
     
     const dayOfWeek = date.getDay();
-    if (dayOfWeek >= 1 && dayOfWeek <= 5) weeks[key].days.add(log.date);
-    if (log.end_time && timeToMinutes(log.end_time) < timeToMinutes('17:00')) weeks[key].hasEarlyLeave = true;
-    if (log.start_time === 'Absent') weeks[key].days.add(log.date); // Count absent days as logged days for simplicity in this logic, or adjust as needed
+    
+    // ✅ แก้ไข 2: นับวันทำงาน เฉพาะวัน จ-ศ ที่ "ไม่ใช่ Absent"
+    // (ถ้าเป็น Absent เราจะไม่ add เข้า set ทำให้ days.size น้อยกว่า 5 -> ถือว่าขาดงาน)
+    if (dayOfWeek >= 1 && dayOfWeek <= 5 && log.start_time !== 'Absent') {
+       weeks[key].days.add(log.date);
+    }
+
+    // เช็ค Early Leave (เฉพาะวันที่มาทำงาน)
+    if (log.start_time !== 'Absent' && log.end_time && timeToMinutes(log.end_time) < timeToMinutes('17:00')) {
+       weeks[key].hasEarlyLeave = true;
+    }
   });
 
   let count = 0;
   Object.values(weeks).forEach(week => {
-    // Logic: ถ้านับวันทำงานได้ไม่ครบ 5 หรือมี Early Leave
+    // เงื่อนไข: วันทำงานจริงไม่ครบ 5 วัน OR มีวันกลับก่อน
     if (week.days.size < 5 || week.hasEarlyLeave) count++;
   });
   return count;
