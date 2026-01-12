@@ -6,6 +6,7 @@ import WeekProgress from '@/components/MainPage/WeekProgress.vue'
 import Insufficient from '@/components/MainPage/Insufficient.vue'
 import AddLog from '@/components/LogManagement/AddLog.vue'
 import EditLog from '@/components/LogManagement/EditLog.vue'
+import GalleryPage from '@/components/GalleryStorage/GalleryPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,19 +15,19 @@ const router = createRouter({
       path: '/',
       name: 'HomePage',
       component: HomePage,
-      meta: { requiresAuth: true, title: 'Login' }
+      meta: { requiresAuth: true, title: 'Internship Worklogs' }
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
-      meta: { guestOnly: true, title: 'Register' }
+      meta: { guestOnly: true, title: 'Login | Internship Worklogs' }
     },
     {
       path: '/register',
       name: 'Register',
       component: Register,
-      meta: { guestOnly: true, title: 'Dashboard' }
+      meta: { guestOnly: true, title: 'Register | Internship Worklogs' }
     },
     {
       path: '/this-week',
@@ -51,6 +52,12 @@ const router = createRouter({
       name: 'EditLog',
       component: EditLog,
       meta: { requiresAuth: true, title: 'Edit Worklog' }
+    },
+    {
+      path: '/gallery',
+      name: 'GalleryPage',
+      component: GalleryPage,
+      meta: { requiresAuth: true, title: 'Gallery Storage' }
     },
   ],
 })

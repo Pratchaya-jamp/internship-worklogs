@@ -39,7 +39,21 @@ const setupDatabase = async () => {
       )
     `);
 
-    console.log("✅ Database Setup Completed! Ready to reuse.");
+    console.log("   - Creating 'gallery_images' table...");
+    await db.execute(`
+      CREATE TABLE IF NOT EXISTS gallery_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        filename TEXT NOT NULL,       -- ชื่อไฟล์จริงใน Server
+        original_name TEXT,           -- ชื่อไฟล์เดิมที่ User อัปมา (เผื่ออยากแสดง)
+        size INTEGER,                 -- ขนาดไฟล์ (bytes)
+        mime_type TEXT,               -- ประเภทไฟล์ (image/png, etc.)
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+      )
+    `);
+
+    console.log("✅ Database Setup Completed!");
     
   } catch (error) {
     console.error("❌ Error setting up database:", error);

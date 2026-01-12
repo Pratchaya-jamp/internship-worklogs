@@ -6,6 +6,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const errorHandler = require("./src/middlewares/errorHandler");
 const requestLogger = require("./src/middlewares/requestLogger");
 const worklogRoutes = require("./src/routes/worklogRoutes");
+const galleryRoutes = require("./src/routes/galleryRoutes");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(requestLogger);
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/worklogs", worklogRoutes);
+app.use("/api/gallery", galleryRoutes);
 
 // Health Check
 app.get("/", (req, res) => {
