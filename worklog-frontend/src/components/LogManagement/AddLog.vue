@@ -12,8 +12,8 @@ const isLoading = ref(false);
 const form = ref({
   date: new Date().toISOString().split('T')[0], // Default Today
   weekNo: '',
-  startTime: '09:00',
-  endTime: '18:00',
+  startTime: '08:00',
+  endTime: '17:00',
   content: '',
   isAbsent: false
 });
